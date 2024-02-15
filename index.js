@@ -13,23 +13,18 @@ const app = express()
 // Es un middleware
 app.use(cors());
 
+// Lectura y parseo del body (antes del uso de rutas)
+app.use(express.json())
+
 // Base de datos
 dbConnection();
 
 
-// Rutas
-// Definimos la respuesta cuando alguien haga la solicitud.
-// Req = Lo que se solicita
-// Res = Lo que mandamos nosotros
+app.use('/api/usuarios', require('./routes/usuarios'))
+app.use('/api/login', require('./routes/auth'))
 
-app.get('/',(req, res)=>{
 
-    res.json({
-        ok: true,
-        msg: 'Hola mundo'
-    })
 
-});
 
 app.listen(process.env.PORT, ()=> {
     console.log("Servidor corriendo en puerto " + process.env.PORT)
